@@ -40,8 +40,12 @@ namespace NoteApp
             }
         }
 
-
-        public Project LoadFile(string filepath)
+        /// <summary>
+        /// Сериализация данных
+        /// </summary>
+        /// <param name="filepath">Путь к файлу</param>
+        /// <returns></returns>
+        public Project LoadFromFile(string filepath)
         {
             Project project;
             if (!File.Exists(filepath))
