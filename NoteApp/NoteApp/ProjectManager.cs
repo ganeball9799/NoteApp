@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace NoteApp
 {
     /// <summary>
-    /// Менеджер проекта
+    /// Класс менеджера проекта
     /// </summary>
     public class ProjectManager
     {

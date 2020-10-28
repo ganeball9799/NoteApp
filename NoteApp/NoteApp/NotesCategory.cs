@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace NoteApp
 {
     /// <summary>
-    /// Список категорий заметок
+    /// Коллекция заметок
     /// </summary>
     public enum NotesCategory
     {
