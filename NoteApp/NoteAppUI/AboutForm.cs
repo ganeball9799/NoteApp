@@ -19,7 +19,7 @@ namespace NoteAppUI
         }
 
         /// <summary>
-        /// 
+        /// Переход по ссылке для написания сообщения
         /// </summary>
         private void LinkMail_Click(object sender, EventArgs e)
         {
@@ -27,7 +27,7 @@ namespace NoteAppUI
         }
 
         /// <summary>
-        /// 
+        /// Переход к репозиторию проекта
         /// </summary>
         private void LinkGitHub_Click(object sender, EventArgs e)
         {
