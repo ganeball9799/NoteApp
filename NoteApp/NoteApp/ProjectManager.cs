@@ -13,10 +13,16 @@ namespace NoteApp
     /// </summary>
     public class ProjectManager
     {
-        public string PathFile()
+        public static string PathFile()
         {
             var filepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             return filepath + @"\NoteApp\NoteApp.json";
+        }
+
+        public static string PathDirectory()
+        {
+            var filepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            return filepath + @"\NoteApp";
         }
 
         /// <summary>
@@ -24,10 +30,11 @@ namespace NoteApp
         /// </summary>
         /// <param name="data">Данные для сериализации</param>
         /// <param name="filepath">Путь к файлу</param>
-        public void SaveFile(Project data, string filepath)
+        public static void SaveToFile(Project data, string filepath)
         {
-            if (filepath == null)
+            if (!File.Exists(filepath))
             {
+                Directory.CreateDirectory(PathDirectory());
                 filepath = PathFile();
             }
 
@@ -45,7 +52,7 @@ namespace NoteApp
         /// </summary>
         /// <param name="filepath">Путь к файлу</param>
         /// <returns></returns>
-        public Project LoadFromFile(string filepath)
+        public static Project LoadFromFile(string filepath)
         {
             Project project;
             if (!File.Exists(filepath))
@@ -53,7 +60,7 @@ namespace NoteApp
                 return new Project();
             }
 
-            JsonSerializer serializer = new JsonSerializer();
+            var serializer = new JsonSerializer();
             try
             {
                 using (StreamReader sr = new StreamReader(filepath))
