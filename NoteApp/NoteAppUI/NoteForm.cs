@@ -14,19 +14,19 @@ namespace NoteAppUI
     /// <summary>
     /// Класс предназначенный для добавления и редактирования заметок
     /// </summary>
-    public partial class AddEditForm : Form
+    public partial class NoteForm : Form
     {
-        private Note _timeNote;
+        private Note _tepmNote;
 
         /// <summary>
         /// Временное хранилище для данных
         /// </summary>
-        public Note TimeNote
+        public Note TepmNote
         {
-            get => _timeNote;
+            get => _tepmNote;
             set
             {
-                _timeNote = value;
+                _tepmNote = value;
                 NameNoteTextBox.Text = value.Title;
                 TimeCreateDateTimePicker.Value = value.TimeCreate;
                 TimeUpdateDateTimePicker.Value = value.TimeLastChange;
@@ -34,7 +34,7 @@ namespace NoteAppUI
                 NoteCategoryComboBox.Text = value.NoteCategory.ToString();
             }
         }
-        public AddEditForm()
+        public NoteForm()
         {
             InitializeComponent();
             NoteCategoryComboBox.DataSource = Enum.GetValues(typeof(NotesCategory));
@@ -83,12 +83,12 @@ namespace NoteAppUI
         {
             try
             {
-                TimeNote.Title = NameNoteTextBox.Text;
-                TimeNote.TimeCreate = TimeCreateDateTimePicker.Value;
-                TimeNote.TimeLastChange = DateTime.Now;
-                TimeNote.TextNote = TextNoteTextBox.Text;
+                TepmNote.Title = NameNoteTextBox.Text;
+                TepmNote.TimeCreate = TimeCreateDateTimePicker.Value;
+                TepmNote.TimeLastChange = DateTime.Now;
+                TepmNote.TextNote = TextNoteTextBox.Text;
                 var notesCategory = (NotesCategory) NoteCategoryComboBox.SelectedItem;
-                TimeNote.NoteCategory = notesCategory ;
+                TepmNote.NoteCategory = notesCategory ;
                 DialogResult = DialogResult.OK;
             }
             catch (Exception e)
@@ -104,9 +104,9 @@ namespace NoteAppUI
         private void NameNoteTextBox_TextChanged(object sender, EventArgs e)
         {
             string text = NameNoteTextBox.Text;
-            int len;
-            len = text.Length;
-            if (len > 50)
+            int lengt;
+            lengt = text.Length;
+            if (lengt > 50)
             {
                 NameNoteTextBox.BackColor = Color.LightCoral;
             }

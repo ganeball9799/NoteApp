@@ -41,17 +41,18 @@ namespace NoteAppUI
         /// </summary>
         private void AddNote()
         {
-            var newNote = new Note { NoteCategory = new NotesCategory() };
-            var addEditForm = new AddEditForm() { TimeNote = newNote };
+            var Note = new Note{};
+            var addEditForm = new NoteForm() { TepmNote = Note };
             var dialogResult = addEditForm.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
                 return;
             }
-            _project.Notes.Add(addEditForm.TimeNote);
-            NotesListBox.Items.Add(addEditForm.TimeNote);
+            _project.Notes.Add(addEditForm.TepmNote);
+            NotesListBox.Items.Add(addEditForm.TepmNote.Title);
             ProjectManager.SaveToFile(_project, _filePath);
-            LoadNamesNote();
+            
+            
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace NoteAppUI
                 var selectIndex = NotesListBox.SelectedIndex;
                 var selectNote = _project.Notes[selectIndex];
 
-                var updateNote = new AddEditForm { TimeNote = selectNote };
+                var updateNote = new NoteForm { TepmNote = selectNote };
                 var dialogResult = updateNote.ShowDialog();
                 if (dialogResult != DialogResult.OK)
                 {
@@ -77,8 +78,8 @@ namespace NoteAppUI
                 }
                 _project.Notes.RemoveAt(selectIndex);
                 NotesListBox.Items.RemoveAt(selectIndex);
-                _project.Notes.Insert(selectIndex, updateNote.TimeNote);
-                NotesListBox.Items.Insert(selectIndex, updateNote.TimeNote.Title);
+                _project.Notes.Insert(selectIndex, updateNote.TepmNote);
+                NotesListBox.Items.Insert(selectIndex, updateNote.TepmNote.Title);
                 NotesListBox.SelectedIndex = selectIndex;
                 ProjectManager.SaveToFile(_project, _filePath);
             }
@@ -120,24 +121,19 @@ namespace NoteAppUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             _project = ProjectManager.LoadFromFile(_filePath);
-            LoadNamesNote();
+            InputNamesNote();
             ProjectManager.SaveToFile(_project, ProjectManager.PathFile());
         }
 
         /// <summary>
         /// Загрузка названий заметок в ListBox
         /// </summary>
-        private void LoadNamesNote()
+        private void InputNamesNote()
         {
-            foreach (var t in _project.Notes)
-            {
-                NotesListBox.Items.Clear();
-            }
-
-            foreach (var t in _project.Notes)
-            {
+           foreach (var t in _project.Notes)
+           {
                 NotesListBox.Items.Add(t.Title);
-            }
+           }
         }
 
         /// <summary>
@@ -237,7 +233,5 @@ namespace NoteAppUI
         {
             Close();
         }
-
-       
     }
 }

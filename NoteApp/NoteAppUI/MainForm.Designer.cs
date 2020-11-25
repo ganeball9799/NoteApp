@@ -66,7 +66,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(805, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(887, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -155,7 +155,7 @@
             this.NotesListBox.FormattingEnabled = true;
             this.NotesListBox.Location = new System.Drawing.Point(12, 61);
             this.NotesListBox.Name = "NotesListBox";
-            this.NotesListBox.Size = new System.Drawing.Size(259, 277);
+            this.NotesListBox.Size = new System.Drawing.Size(259, 420);
             this.NotesListBox.TabIndex = 3;
             this.NotesListBox.SelectedIndexChanged += new System.EventHandler(this.NotesListBox_SelectedIndexChanged);
             // 
@@ -171,9 +171,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(3, 39);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.Size = new System.Drawing.Size(58, 15);
             this.label3.TabIndex = 5;
             this.label3.Text = "Category:";
             // 
@@ -188,18 +189,20 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 79);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(3, 78);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.Size = new System.Drawing.Size(53, 15);
             this.label5.TabIndex = 7;
             this.label5.Text = "Created:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(165, 80);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(208, 78);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.Size = new System.Drawing.Size(58, 15);
             this.label6.TabIndex = 8;
             this.label6.Text = "Modified:";
             // 
@@ -216,32 +219,34 @@
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.NameNote);
-            this.panel1.Location = new System.Drawing.Point(280, 12);
+            this.panel1.Location = new System.Drawing.Point(280, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(520, 441);
+            this.panel1.Size = new System.Drawing.Size(602, 506);
             this.panel1.TabIndex = 9;
             // 
             // TimeCreate
             // 
             this.TimeCreate.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.TimeCreate.CustomFormat = "";
+            this.TimeCreate.CustomFormat = "dd.MM.yyyy hh:mm";
             this.TimeCreate.Enabled = false;
-            this.TimeCreate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.TimeCreate.Location = new System.Drawing.Point(47, 77);
+            this.TimeCreate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.TimeCreate.Location = new System.Drawing.Point(70, 77);
             this.TimeCreate.MaxDate = new System.DateTime(9998, 12, 30, 0, 0, 0, 0);
             this.TimeCreate.Name = "TimeCreate";
-            this.TimeCreate.Size = new System.Drawing.Size(77, 20);
+            this.TimeCreate.Size = new System.Drawing.Size(123, 20);
             this.TimeCreate.TabIndex = 13;
             this.TimeCreate.Value = new System.DateTime(2020, 11, 25, 2, 34, 3, 0);
             // 
             // TimeUpdate
             // 
+            this.TimeUpdate.CustomFormat = "dd.MM.yyyy hh:mm";
             this.TimeUpdate.Enabled = false;
-            this.TimeUpdate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.TimeUpdate.Location = new System.Drawing.Point(214, 77);
+            this.TimeUpdate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.TimeUpdate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.TimeUpdate.Location = new System.Drawing.Point(279, 77);
             this.TimeUpdate.MaxDate = new System.DateTime(9998, 12, 23, 0, 0, 0, 0);
             this.TimeUpdate.Name = "TimeUpdate";
-            this.TimeUpdate.Size = new System.Drawing.Size(79, 20);
+            this.TimeUpdate.Size = new System.Drawing.Size(126, 20);
             this.TimeUpdate.TabIndex = 12;
             this.TimeUpdate.Value = new System.DateTime(2020, 11, 25, 2, 34, 16, 0);
             // 
@@ -255,7 +260,7 @@
             this.TextNoteTextBox.Name = "TextNoteTextBox";
             this.TextNoteTextBox.ReadOnly = true;
             this.TextNoteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TextNoteTextBox.Size = new System.Drawing.Size(514, 335);
+            this.TextNoteTextBox.Size = new System.Drawing.Size(596, 400);
             this.TextNoteTextBox.TabIndex = 11;
             // 
             // AddNoteButton
@@ -266,7 +271,7 @@
             this.AddNoteButton.FlatAppearance.BorderSize = 0;
             this.AddNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.AddNoteButton.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.AddNoteButton.Location = new System.Drawing.Point(12, 399);
+            this.AddNoteButton.Location = new System.Drawing.Point(8, 494);
             this.AddNoteButton.Margin = new System.Windows.Forms.Padding(5);
             this.AddNoteButton.Name = "AddNoteButton";
             this.AddNoteButton.Size = new System.Drawing.Size(38, 38);
@@ -281,7 +286,7 @@
             this.EditNoteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.EditNoteButton.FlatAppearance.BorderSize = 0;
             this.EditNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EditNoteButton.Location = new System.Drawing.Point(61, 399);
+            this.EditNoteButton.Location = new System.Drawing.Point(57, 494);
             this.EditNoteButton.Margin = new System.Windows.Forms.Padding(5);
             this.EditNoteButton.Name = "EditNoteButton";
             this.EditNoteButton.Size = new System.Drawing.Size(38, 38);
@@ -297,7 +302,7 @@
             this.RemoveNoteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.RemoveNoteButton.FlatAppearance.BorderSize = 0;
             this.RemoveNoteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RemoveNoteButton.Location = new System.Drawing.Point(112, 399);
+            this.RemoveNoteButton.Location = new System.Drawing.Point(108, 494);
             this.RemoveNoteButton.Margin = new System.Windows.Forms.Padding(5);
             this.RemoveNoteButton.Name = "RemoveNoteButton";
             this.RemoveNoteButton.Size = new System.Drawing.Size(38, 38);
@@ -310,7 +315,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(805, 460);
+            this.ClientSize = new System.Drawing.Size(887, 540);
             this.Controls.Add(this.RemoveNoteButton);
             this.Controls.Add(this.EditNoteButton);
             this.Controls.Add(this.AddNoteButton);
@@ -321,6 +326,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(683, 323);
             this.Name = "MainForm";
             this.Text = "NoteApp";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
