@@ -42,14 +42,14 @@ namespace NoteAppUI
         private void AddNote()
         {
             var Note = new Note{};
-            var addEditForm = new NoteForm() { TepmNote = Note };
-            var dialogResult = addEditForm.ShowDialog();
+            var noteForm = new NoteForm() { TepmNote = Note };
+            var dialogResult = noteForm.ShowDialog();
             if (dialogResult != DialogResult.OK)
             {
                 return;
             }
-            _project.Notes.Add(addEditForm.TepmNote);
-            NotesListBox.Items.Add(addEditForm.TepmNote.Title);
+            _project.Notes.Add(noteForm.TepmNote);
+            NotesListBox.Items.Add(noteForm.TepmNote.Title);
             ProjectManager.SaveToFile(_project, _filePath);
             
             
@@ -121,14 +121,14 @@ namespace NoteAppUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             _project = ProjectManager.LoadFromFile(_filePath);
-            InputNamesNote();
+            FillingNotesListBox();
             ProjectManager.SaveToFile(_project, ProjectManager.PathFile());
         }
 
         /// <summary>
         /// Загрузка названий заметок в ListBox
         /// </summary>
-        private void InputNamesNote()
+        private void FillingNotesListBox()
         {
            foreach (var t in _project.Notes)
            {
@@ -212,7 +212,7 @@ namespace NoteAppUI
         /// <summary>
         /// Метод для открытия окна About
         /// </summary>
-        private static void ShowAboutForm()
+        private void ShowAboutForm()
         {
             var about = new AboutForm();
             about.ShowDialog();
