@@ -51,8 +51,6 @@ namespace NoteAppUI
             _project.Notes.Add(noteForm.TepmNote);
             NotesListBox.Items.Add(noteForm.TepmNote.Title);
             ProjectManager.SaveToFile(_project, _filePath);
-            
-            
         }
 
         /// <summary>
