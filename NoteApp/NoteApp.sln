@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp", "NoteApp\NoteApp.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{73087FBC-D5F4-4B2C-8D6C-8646C20C5B0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoteApp.UnitTests", "Testing\NoteApp.UnitTests\NoteApp.UnitTests.csproj", "{F1EBF869-0388-494A-914B-4D2189FD215B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NoteApp.UnitTests", "Testing\NoteApp.UnitTests\NoteApp.UnitTests.csproj", "{F1EBF869-0388-494A-914B-4D2189FD215B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

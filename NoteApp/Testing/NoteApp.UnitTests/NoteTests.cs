@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace NoteApp.UnitTests
 {
@@ -20,6 +21,7 @@ namespace NoteApp.UnitTests
 
             //Assert
             NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+            
         }
 
         [Test]
@@ -38,6 +40,23 @@ namespace NoteApp.UnitTests
                     note.Title = sourceName;
                 }
             );
+        }
+
+        [Test]
+        public void Name_NoneName_ReturnsBasicName()
+        {
+            //Setup
+            var note = new Note();
+            var sourceName = "";
+            var expectedName = "Безымянный";
+
+            //Act
+            note.Title = sourceName;
+            var actualName = note.Title;
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+            
         }
     }
 }

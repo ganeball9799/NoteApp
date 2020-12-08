@@ -28,7 +28,15 @@ namespace NoteAppUI
         public MainForm()
         {
             InitializeComponent();
-            CategoryComboBox.DataSource = Enum.GetValues(typeof(NotesCategory));
+            //CategoryComboBox.DataSource = Enum.GetValues(typeof(NotesCategory));
+            CategoryComboBox.Items.Add("All");
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Work);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Home);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.HealthAndSport);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Peoples);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Documents);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Finances);
+            CategoryComboBox.Items.Add(NoteApp.NotesCategory.Other);
         }
 
         /// <summary>
