@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace NoteApp
 {
@@ -71,6 +72,36 @@ namespace NoteApp
                 TimeCreate = TimeCreate,
                 NoteCategory = NoteCategory
             };
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Note note)
+            {
+                if (note.Title != this.Title)
+                {
+                    return false;
+                }
+                if (note.TextNote != this.TextNote)
+                {
+                    return false;
+                }
+                if (note.TimeCreate != this.TimeCreate)
+                {
+                    return false;
+                }
+                if (note.TimeLastChange != this.TimeLastChange)
+                {
+                    return false;
+                }
+                if (note.NoteCategory != this.NoteCategory)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            return false;
         }
 
     }

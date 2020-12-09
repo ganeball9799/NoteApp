@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\defectiveProject.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\expectedProject.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

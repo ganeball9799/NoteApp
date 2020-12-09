@@ -16,17 +16,17 @@ namespace NoteAppUI
     /// </summary>
     public partial class NoteForm : Form
     {
-        private Note _tepmNote;
+        private Note tempNote;
 
         /// <summary>
         /// Временное хранилище для данных
         /// </summary>
         public Note TepmNote
         {
-            get => _tepmNote;
+            get => tempNote;
             set
             {
-                _tepmNote = value;
+                tempNote = value;
                 NameNoteTextBox.Text = value.Title;
                 TimeCreateDateTimePicker.Value = value.TimeCreate;
                 TimeUpdateDateTimePicker.Value = value.TimeLastChange;

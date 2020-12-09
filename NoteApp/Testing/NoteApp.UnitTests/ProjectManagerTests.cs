@@ -61,26 +61,7 @@ namespace NoteApp.UnitTests
             var expectedFileContent = File.ReadAllText(expectedFileName);
             NUnit.Framework.Assert.AreEqual(expectedFileContent, actualFileContent);
         }
-
-        //[Test]
-        ////public void LoadFromFile_CorrectProject_FileLoadCorrectly()
-        ////{
-        ////    // Setup
-        ////    var expectedProject = PrepareProject();
-
-        ////    var location = Assembly.GetExecutingAssembly().Location;
-        ////    var testDataFolder = Path.GetDirectoryName(location) + @"\TestDataExpected";
-        ////    var testFileName = testDataFolder + @"\expectedProject.json";
-
-        ////    // Act
-        ////    var actualProject = ProjectManager.LoadFromFile(testFileName);
-        ////    var expected = JsonConvert.SerializeObject(expectedProject);
-        ////    var actual = JsonConvert.SerializeObject(actualProject);
-
-        ////    // Assert
-        ////    NUnit.Framework.Assert.AreEqual(expected, actual);
-        ////}
-
+        
         [Test]
         public void LoadFromFile_CorrectProject_FileLoadedCorrectly()
         {
@@ -88,15 +69,22 @@ namespace NoteApp.UnitTests
             var expectedProject = PrepareProject();
 
             var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\TestDataExpected";
+            var testDataFolder = Path.GetDirectoryName(location) + @"\TestData";
             var testFileName = testDataFolder + @"\expectedProject.json";
 
             //Act
             var actualProject = ProjectManager.LoadFromFile(testFileName);
-            var expected = JsonConvert.SerializeObject(expectedProject);
-            var actual = JsonConvert.SerializeObject(actualProject);
+            
             //Assert
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expectedProject.Notes.Count, actualProject.Notes.Count);
+
+            Assert.Multiple(() =>
+                {
+                    for (int i = 0; i < expectedProject.Notes.Count; i++)
+                    {
+                        Assert.AreEqual(expectedProject.Notes[i], actualProject.Notes[i]);
+                    }
+                });
         }
 
         [Test]
@@ -119,7 +107,7 @@ namespace NoteApp.UnitTests
         {
             //Setup
             var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\TestDataExpected";
+            var testDataFolder = Path.GetDirectoryName(location) + @"\TestData";
             var testFileName = testDataFolder + @"\defectiveProject.json";
 
             //Act

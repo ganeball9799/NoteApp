@@ -25,6 +25,70 @@ namespace NoteApp.UnitTests
         }
 
         [Test]
+        public void Text_GoodText_ReturnsSameText()
+        {
+            //Setup
+            var note = new Note();
+            var sourceName = "Мы с Кежиком идем в качалку на выходных";
+            var expectedName = sourceName;
+
+            //Act
+            note.TextNote = sourceName;
+            var actualName = note.TextNote;
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+        }
+
+        [Test]
+        public void Category_GoodCategory_ReturnsSameCategory()
+        {
+            //Setup
+            var note = new Note();
+            var sourceName = NotesCategory.Documents;
+            var expectedName = sourceName;
+
+            //Act
+            note.NoteCategory = sourceName;
+            var actualName = note.NoteCategory;
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+        }
+
+        [Test]
+        public void Create_GoodTimeCreate_ReturnsSameDate()
+        {
+            //Setup
+            var note = new Note();
+            var sourceName = new DateTime(2020,12,09);
+            var expectedName = sourceName;
+
+            //Act
+            note.TimeCreate = sourceName;
+            var actualName = note.TimeCreate;
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+        }
+
+        [Test]
+        public void Modify_GoodTimeModify_ReturnsSameDate()
+        {
+            //Setup
+            var note = new Note();
+            var sourceName = new DateTime(2020, 12, 09);
+            var expectedName = sourceName;
+
+            //Act
+            note.TimeLastChange = sourceName;
+            var actualName = note.TimeLastChange;
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+        }
+
+        [Test]
         public void Name_BadName_ThrowsException()
         {
             //Setup
