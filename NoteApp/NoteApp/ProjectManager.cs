@@ -36,11 +36,11 @@ namespace NoteApp
         /// </summary>
         /// <param name="data">Данные для сериализации</param>
         /// <param name="filepath">Путь к файлу</param>
-        public static void SaveToFile(Project data, string filepath)
+        public static void SaveToFile(Project data, string filepath, string directoryPath)
         {
-            if (!File.Exists(PathDirectory()))
+            if (!File.Exists(directoryPath))
             {
-                Directory.CreateDirectory(PathDirectory());
+                Directory.CreateDirectory(directoryPath);
             }
             var serializer = new JsonSerializer();
             using (var sw = new StreamWriter(filepath))

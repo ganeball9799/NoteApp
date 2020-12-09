@@ -44,6 +44,8 @@ namespace NoteAppUI
         /// </summary>
         private readonly string _filePath = ProjectManager.PathFile();
 
+        private readonly string _directoryPath = ProjectManager.PathDirectory();
+
         /// <summary>
         /// добавление заметки
         /// </summary>
@@ -58,7 +60,7 @@ namespace NoteAppUI
             }
             _project.Notes.Add(noteForm.TepmNote);
             NotesListBox.Items.Add(noteForm.TepmNote.Title);
-            ProjectManager.SaveToFile(_project, _filePath);
+            ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace NoteAppUI
                 _project.Notes.Insert(selectIndex, updateNote.TepmNote);
                 NotesListBox.Items.Insert(selectIndex, updateNote.TepmNote.Title);
                 NotesListBox.SelectedIndex = selectIndex;
-                ProjectManager.SaveToFile(_project, _filePath);
+                ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
             }
         }
 
@@ -113,7 +115,7 @@ namespace NoteAppUI
                 }
                 _project.Notes.RemoveAt(selectedIndex);
                 NotesListBox.Items.RemoveAt(selectedIndex);
-                ProjectManager.SaveToFile(_project, _filePath);
+                ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
                 if (NotesListBox.Items.Count > 0)
                 {
                     NotesListBox.SelectedIndex = 0;
@@ -128,7 +130,7 @@ namespace NoteAppUI
         {
             _project = ProjectManager.LoadFromFile(_filePath);
             FillingNotesListBox();
-            ProjectManager.SaveToFile(_project, ProjectManager.PathFile());
+            ProjectManager.SaveToFile(_project, ProjectManager.PathFile(), _directoryPath);
         }
 
         /// <summary>
@@ -229,7 +231,7 @@ namespace NoteAppUI
         /// </summary>
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ProjectManager.SaveToFile(_project, _filePath);
+            ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
         }
 
         /// <summary>

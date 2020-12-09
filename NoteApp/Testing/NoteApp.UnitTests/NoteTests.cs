@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -21,7 +22,6 @@ namespace NoteApp.UnitTests
 
             //Assert
             NUnit.Framework.Assert.AreEqual(expectedName, actualName);
-            
         }
 
         [Test]
@@ -29,7 +29,8 @@ namespace NoteApp.UnitTests
         {
             //Setup
             var note = new Note();
-            var sourceName = "Мы с Кежиком идем в качалку и нас никто и ничто не остоновит, ведь это хорошо для здоровья...Наверное :)";
+            var sourceName =
+                "Мы с Кежиком идем в качалку и нас никто и ничто не остоновит, ведь это хорошо для здоровья...Наверное :)";
 
             //Assert
             NUnit.Framework.Assert.Throws<ArgumentException>
@@ -56,7 +57,30 @@ namespace NoteApp.UnitTests
 
             //Assert
             NUnit.Framework.Assert.AreEqual(expectedName, actualName);
+        }
+
+        [Test]
+        public void Clone_GoodClone_ReturnSameData()
+        {
+            //Setup
+            var sourceCategory = NotesCategory.Work;
+            var notesCategory = sourceCategory;
+            var expectedNote = new Note
+            {
+                Title = "Работка",
+                TextNote = "I love my work",
+                NoteCategory = notesCategory,
+                TimeCreate = new DateTime(2020, 12, 09),
+                TimeLastChange = new DateTime(2020, 12, 09)
+            };
             
+            //Act
+            var actualNote = expectedNote.Clone() as Note;
+            var expected = JsonConvert.SerializeObject(expectedNote);
+            var actual = JsonConvert.SerializeObject(actualNote);
+
+            //Assert
+            NUnit.Framework.Assert.AreEqual(expected, actual);
         }
     }
 }
