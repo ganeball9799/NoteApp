@@ -39,15 +39,12 @@ namespace NoteApp.UnitTests
         {
             // Setup
             var sourceProject = PrepareProject();
-
-            var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\TestData";
+            var testDataFolder = Routes.DataFolderForTest();
             var actualFileName = testDataFolder + @"\actualProject.json";
-            var expectedDataFolder = Path.GetDirectoryName(location) + @"\TestDataExpected";
-            var expectedFileName = expectedDataFolder + @"\expectedProject.json";
-            if (Directory.Exists(testDataFolder))
+            var expectedFileName = testDataFolder + @"\expectedProject.json";
+            if (File.Exists(actualFileName))
             {
-                Directory.Delete(testDataFolder, true);
+                File.Delete(actualFileName);
             }
 
             // Act
@@ -67,9 +64,7 @@ namespace NoteApp.UnitTests
         {
             //Setup
             var expectedProject = PrepareProject();
-
-            var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\TestData";
+            var testDataFolder = Routes.DataFolderForTest();
             var testFileName = testDataFolder + @"\expectedProject.json";
 
             //Act
@@ -91,9 +86,7 @@ namespace NoteApp.UnitTests
         public void LoadFromFile_UnCorrectPath_ReturnEmptyProject()
         {
             //Setup
-            var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\Wrong";
-            var testFileName = testDataFolder + @"\Wrong.json";
+            var testFileName = Routes.DataFolderForTest() + "wrong";
 
             //Act
             var actualProject = ProjectManager.LoadFromFile(testFileName);
@@ -106,8 +99,7 @@ namespace NoteApp.UnitTests
         public void LoadFromFile_UnCorrectFile_ReturnEmptyProject()
         {
             //Setup
-            var location = Assembly.GetExecutingAssembly().Location;
-            var testDataFolder = Path.GetDirectoryName(location) + @"\TestData";
+            var testDataFolder = Routes.DataFolderForTest();
             var testFileName = testDataFolder + @"\defectiveProject.json";
 
             //Act
@@ -121,8 +113,7 @@ namespace NoteApp.UnitTests
         public void FilePath_GoodFilePath_ReturnSamePath()
         {
             //Setup
-            var expectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            expectedPath += @"\NoteApp\NoteApp.json";
+            var expectedPath = Routes.FilePath();
             //Act
             var actualPath = ProjectManager.PathFile();
 
@@ -134,8 +125,7 @@ namespace NoteApp.UnitTests
         public void DirectoryPath_GoodDirectoryPath_ReturnSameDirectory()
         {
             //Setup
-            var expectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            expectedPath += @"\NoteApp";
+            var expectedPath = Routes.DirectoryPath();
             //Act
             var actualPath = ProjectManager.PathDirectory();
 

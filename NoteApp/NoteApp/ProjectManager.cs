@@ -28,7 +28,7 @@ namespace NoteApp
         public static string PathDirectory()
         {
             var filepath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            return filepath + @"\NoteApp";
+            return filepath + @"\NoteApp\";
         }
 
         /// <summary>
