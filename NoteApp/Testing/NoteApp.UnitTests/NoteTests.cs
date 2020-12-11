@@ -93,8 +93,7 @@ namespace NoteApp.UnitTests
         {
             //Setup
             var note = new Note();
-            var sourceName =
-                "Мы с Кежиком идем в качалку и нас никто и ничто не остоновит, ведь это хорошо для здоровья...Наверное :)";
+            var sourceName ="Мы с Кежиком идем в качалку и нас никто и ничто не остоновит, ведь это хорошо для здоровья...Наверное :)";
 
             //Assert
             NUnit.Framework.Assert.Throws<ArgumentException>
