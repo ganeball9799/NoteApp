@@ -16,13 +16,11 @@ namespace NoteApp
     /// </summary>
     public class Project
     {
+        public int SelectedIndex { get; set; }
         /// <summary>
         /// Содержит список всех заметок
         /// </summary>
         public List<Note> Notes = new List<Note>();
-        
-        ///Код,который пусть будет пока здесь
-        //public ObservableCollection<Note> Notes { get; set; } = new ObservableCollection<Note>();
     }
     
 }

@@ -28,7 +28,7 @@ namespace NoteAppUI
         public MainForm()
         {
             InitializeComponent(); 
-            CategoryComboBox.Items.Add("All");
+            CategoryComboBox.Items.Add("All"); 
             CategoryComboBox.Items.AddRange(Enum.GetNames(typeof(NoteApp.NotesCategory)));
            
         }
@@ -124,6 +124,7 @@ namespace NoteAppUI
         {
             _project = ProjectManager.LoadFromFile(_filePath);
             FillingNotesListBox();
+            NotesListBox.SelectedIndex = _project.SelectedIndex;
             ProjectManager.SaveToFile(_project, ProjectManager.PathFile(), _directoryPath);
         }
 
@@ -225,6 +226,7 @@ namespace NoteAppUI
         /// </summary>
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            _project.SelectedIndex = NotesListBox.SelectedIndex;
             ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
         }
 
@@ -233,6 +235,7 @@ namespace NoteAppUI
         /// </summary>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            _project.SelectedIndex = NotesListBox.SelectedIndex;
             Close();
         }
     }
