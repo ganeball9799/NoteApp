@@ -132,10 +132,11 @@ namespace NoteAppUI
         /// Загрузка названий заметок в ListBox
         /// </summary>
         private void FillingNotesListBox()
-        {
-           foreach (var t in _project.Notes)
+        {   NotesListBox.Items.Clear();
+            foreach (var t in _project.Notes)
            {
                 NotesListBox.Items.Add(t.Title);
+                _project.SortNotes(_project.Notes);
            }
         }
 
@@ -162,6 +163,7 @@ namespace NoteAppUI
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
             AddNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -170,6 +172,7 @@ namespace NoteAppUI
         private void EditNoteButton_Click(object sender, EventArgs e)
         {
             EditNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -178,6 +181,7 @@ namespace NoteAppUI
         private void RemoveNoteButton_Click(object sender, EventArgs e)
         {
             DeleteNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -186,6 +190,7 @@ namespace NoteAppUI
         private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -194,6 +199,7 @@ namespace NoteAppUI
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -202,6 +208,7 @@ namespace NoteAppUI
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteNote();
+            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -237,6 +244,48 @@ namespace NoteAppUI
         {
             _project.SelectedIndex = NotesListBox.SelectedIndex;
             Close();
+        }
+        /// <summary>
+        /// Метод для сортировки заметок по категориям
+        /// </summary>
+        
+
+        /// <summary>
+        /// Метод для отображения заметок по категории
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (CategoryComboBox.SelectedIndex)
+            {
+                case 0:
+                    FillingNotesListBox();
+                    _project.SortNotes(_project.Notes);
+                    break;
+                case 1:
+                    FillingNotesListBox();
+                    _project.SortNotes(NoteApp.NotesCategory.Work, _project.Notes);
+                    break;
+                case 2:
+                    _project.SortNotes(NoteApp.NotesCategory.Home, _project.Notes);
+                    break;
+                case 3:
+                    _project.SortNotes(NoteApp.NotesCategory.HealthAndSport, _project.Notes);
+                    break;
+                case 4:
+                    _project.SortNotes(NoteApp.NotesCategory.Peoples, _project.Notes);
+                    break;
+                case 5:
+                    _project.SortNotes(NoteApp.NotesCategory.Documents, _project.Notes);
+                    break;
+                case 6:
+                    _project.SortNotes(NoteApp.NotesCategory.Finances, _project.Notes);
+                    break;
+                case 7:
+                    _project.SortNotes(NoteApp.NotesCategory.Other, _project.Notes);
+                    break;
+            }
         }
     }
 }
