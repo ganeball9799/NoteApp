@@ -18,36 +18,31 @@ namespace NoteApp
     /// </summary>
     public class Project
     {
+        /// <summary>
+        /// Содержит индекс текущей заметки
+        /// </summary>
         public int SelectedIndex { get; set; }
+
         /// <summary>
         /// Содержит список всех заметок
         /// </summary>
         public List<Note> Notes = new List<Note>();
-        
-        public List<Note> SortNotes(NotesCategory category, List<Note> notes)
-        {   
-            List<Note> sortList = new List<Note>();
-            foreach (Note currentNote in notes)
-            {
-                if (currentNote.NoteCategory == category)
-                {
-                    sortList.Add(currentNote);
-                }
-            }
-            if (sortList.Count == 0)
-            {
-                return sortList;
-            }
-            SortNotes(sortList);
-            return sortList;
-        }
 
+        /// <summary>
+        /// Сортировка по дате изменения и категории заметок
+        /// </summary>
+        public List<Note> SortNotes(List<Note> notes, NotesCategory category)
+        {
+            return notes = notes.Where(item => item.NoteCategory == category).OrderByDescending(item => item.TimeLastChange).ToList();
+        }
+        /// <summary>
+        /// Сортировка по дате изменения
+        /// </summary>
         public List<Note> SortNotes(List<Note> notes)
         {
-            notes.Sort((x, y) => y.TimeLastChange.CompareTo(x.TimeLastChange));
-            return notes;
+            return notes = notes.OrderByDescending(item => item.TimeLastChange).ToList();
         }
-        
+
     }
-    
+
 }

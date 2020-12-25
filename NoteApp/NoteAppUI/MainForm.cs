@@ -25,12 +25,15 @@ namespace NoteAppUI
         /// Хранилище для данных
         /// </summary>
         private Project _project = new Project();
+        private List<Note> listNotes = new List<Note>();
         public MainForm()
         {
-            InitializeComponent(); 
-            CategoryComboBox.Items.Add("All"); 
+            InitializeComponent();
             CategoryComboBox.Items.AddRange(Enum.GetNames(typeof(NoteApp.NotesCategory)));
-           
+            CategoryComboBox.Items.Add("All");
+            listNotes = _project.Notes;
+            listNotes = _project.SortNotes(listNotes);
+            UpdateListBox();
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace NoteAppUI
         /// </summary>
         private void AddNote()
         {
-            var Note = new Note{};
+            var Note = new Note { };
             var noteForm = new NoteForm() { TepmNote = Note };
             var dialogResult = noteForm.ShowDialog();
             if (dialogResult != DialogResult.OK)
@@ -53,7 +56,9 @@ namespace NoteAppUI
                 return;
             }
             _project.Notes.Add(noteForm.TepmNote);
+            listNotes.Add(noteForm.TepmNote);
             NotesListBox.Items.Add(noteForm.TepmNote.Title);
+            UpdateListBox();
             ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
         }
 
@@ -70,7 +75,7 @@ namespace NoteAppUI
             else
             {
                 var selectIndex = NotesListBox.SelectedIndex;
-                var selectNote = _project.Notes[selectIndex];
+                var selectNote = listNotes[selectIndex];
 
                 var updateNote = new NoteForm { TepmNote = selectNote };
                 var dialogResult = updateNote.ShowDialog();
@@ -78,11 +83,15 @@ namespace NoteAppUI
                 {
                     return;
                 }
-                _project.Notes.RemoveAt(selectIndex);
-                NotesListBox.Items.RemoveAt(selectIndex);
-                _project.Notes.Insert(selectIndex, updateNote.TepmNote);
-                NotesListBox.Items.Insert(selectIndex, updateNote.TepmNote.Title);
-                NotesListBox.SelectedIndex = selectIndex;
+
+                var noteSelectIndex = _project.Notes.IndexOf(selectNote);
+                listNotes.RemoveAt(selectIndex);
+                _project.Notes.RemoveAt(noteSelectIndex);
+                listNotes.Insert(selectIndex,updateNote.TepmNote);
+                _project.Notes.Insert(noteSelectIndex,updateNote.TepmNote);
+                NotesListBox.Items.Insert(selectIndex,updateNote.TepmNote.Title);
+                UpdateListBox();
+                _project.SelectedIndex = NotesListBox.SelectedIndex;
                 ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
             }
         }
@@ -100,6 +109,7 @@ namespace NoteAppUI
             else
             {
                 var selectedIndex = NotesListBox.SelectedIndex;
+                Note selectNote = listNotes[selectedIndex];
                 var result = MessageBox.Show($@"Are you sure you want to delete the note:
                     {_project.Notes[selectedIndex].Title}?", @"Confirmation",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
@@ -107,8 +117,12 @@ namespace NoteAppUI
                 {
                     return;
                 }
-                _project.Notes.RemoveAt(selectedIndex);
+
+                var noteSelectIndex = _project.Notes.IndexOf(selectNote);
+                listNotes.RemoveAt(selectedIndex);
+                _project.Notes.RemoveAt(noteSelectIndex);
                 NotesListBox.Items.RemoveAt(selectedIndex);
+                UpdateListBox();
                 ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
                 if (NotesListBox.Items.Count > 0)
                 {
@@ -123,21 +137,10 @@ namespace NoteAppUI
         private void MainForm_Load(object sender, EventArgs e)
         {
             _project = ProjectManager.LoadFromFile(_filePath);
-            FillingNotesListBox();
-            NotesListBox.SelectedIndex = _project.SelectedIndex;
+            CategoryComboBox.SelectedIndex = CategoryComboBox.Items.Count-1;
+            UpdateListBox();
+            LastOpenNote();
             ProjectManager.SaveToFile(_project, ProjectManager.PathFile(), _directoryPath);
-        }
-
-        /// <summary>
-        /// Загрузка названий заметок в ListBox
-        /// </summary>
-        private void FillingNotesListBox()
-        {   NotesListBox.Items.Clear();
-            foreach (var t in _project.Notes)
-           {
-                NotesListBox.Items.Add(t.Title);
-                _project.SortNotes(_project.Notes);
-           }
         }
 
         /// <summary>
@@ -146,24 +149,63 @@ namespace NoteAppUI
         private void NotesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = NotesListBox.SelectedIndex;
+            var selectNote = listNotes[index];
             if (index >= 0)
             {
-                NameNote.Text = _project.Notes[index].Title;
-                TextNoteTextBox.Text = _project.Notes[index].TextNote;
-                TimeCreate.Value = _project.Notes[index].TimeCreate;
-                TimeUpdate.Value = _project.Notes[index].TimeLastChange;
-                NotesCategory.Text = _project.Notes[index].NoteCategory.ToString();
+                _project.SelectedIndex = NotesListBox.SelectedIndex;
+                NameNote.Text = selectNote.Title;
+                TextNoteTextBox.Text = selectNote.TextNote;
+                TimeCreate.Value = selectNote.TimeCreate;
+                TimeUpdate.Value = selectNote.TimeLastChange;
+                NotesCategory.Text = selectNote.NoteCategory.ToString();
+            }
+            else
+            {
+                return;
             }
 
         }
-
+        /// <summary>
+        /// Обновление списка заметок
+        /// </summary>
+        private void UpdateListBox()
+        {
+            listNotes = _project.Notes;
+            if (CategoryComboBox.SelectedIndex != CategoryComboBox.Items.Count - 1)
+            {
+                listNotes = _project.SortNotes(listNotes, (NotesCategory)CategoryComboBox.SelectedIndex);
+            }
+            else
+            {
+                listNotes = _project.SortNotes(listNotes);
+            }
+            NotesListBox.Items.Clear();
+            for (int i = 0; i <listNotes.Count; i++)
+            {
+                NotesListBox.Items.Add(listNotes[i].Title);
+            }
+        }
+        /// <summary>
+        /// Метод обработки последней заметки
+        /// </summary>
+        private void LastOpenNote()
+        {
+            if (_project.SelectedIndex>NotesListBox.Items.Count)
+            {
+                NotesListBox.SelectedIndex = 0;
+            }
+            else
+            {
+                NotesListBox.SelectedIndex = _project.SelectedIndex;
+            }
+        }
         /// <summary>
         /// Добавление заметки при нажатии на кнопку AddNoteButton
         /// </summary>
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
             AddNote();
-            _project.SortNotes(_project.Notes);
+            UpdateListBox();
         }
 
         /// <summary>
@@ -172,7 +214,6 @@ namespace NoteAppUI
         private void EditNoteButton_Click(object sender, EventArgs e)
         {
             EditNote();
-            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -181,7 +222,6 @@ namespace NoteAppUI
         private void RemoveNoteButton_Click(object sender, EventArgs e)
         {
             DeleteNote();
-            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -190,7 +230,6 @@ namespace NoteAppUI
         private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddNote();
-            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -199,7 +238,6 @@ namespace NoteAppUI
         private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EditNote();
-            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -208,7 +246,6 @@ namespace NoteAppUI
         private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteNote();
-            _project.SortNotes(_project.Notes);
         }
 
         /// <summary>
@@ -245,47 +282,10 @@ namespace NoteAppUI
             _project.SelectedIndex = NotesListBox.SelectedIndex;
             Close();
         }
-        /// <summary>
-        /// Метод для сортировки заметок по категориям
-        /// </summary>
-        
 
-        /// <summary>
-        /// Метод для отображения заметок по категории
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (CategoryComboBox.SelectedIndex)
-            {
-                case 0:
-                    FillingNotesListBox();
-                    _project.SortNotes(_project.Notes);
-                    break;
-                case 1:
-                    FillingNotesListBox();
-                    _project.SortNotes(NoteApp.NotesCategory.Work, _project.Notes);
-                    break;
-                case 2:
-                    _project.SortNotes(NoteApp.NotesCategory.Home, _project.Notes);
-                    break;
-                case 3:
-                    _project.SortNotes(NoteApp.NotesCategory.HealthAndSport, _project.Notes);
-                    break;
-                case 4:
-                    _project.SortNotes(NoteApp.NotesCategory.Peoples, _project.Notes);
-                    break;
-                case 5:
-                    _project.SortNotes(NoteApp.NotesCategory.Documents, _project.Notes);
-                    break;
-                case 6:
-                    _project.SortNotes(NoteApp.NotesCategory.Finances, _project.Notes);
-                    break;
-                case 7:
-                    _project.SortNotes(NoteApp.NotesCategory.Other, _project.Notes);
-                    break;
-            }
+            UpdateListBox();
         }
     }
 }
