@@ -124,4 +124,15 @@
     <Content Include="note_.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>rd /S /Q "$(SolutionDir)InstallScripts\Release"
+rd /S /Q "$(SolutionDir)InstallScripts\Installers"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>md "$(SolutionDir)installScripts"
+md "$(SolutionDir)InstallScripts\Release"
+md "$(SolutionDir)InstallScripts\Installers"
+xcopy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)InstallScripts\Release\"
+xcopy "$(ProjectDir)$(OutDir)*.exe" "$(SolutionDir)InstallScripts\Release\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
