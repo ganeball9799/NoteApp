@@ -101,6 +101,8 @@ namespace NoteAppUI
         /// </summary>
         private void DeleteNote()
         {
+            var selectedIndex = NotesListBox.SelectedIndex;
+            Note selectNote = listNotes[selectedIndex];
             if (NotesListBox.SelectedIndex == -1)
             {
                 MessageBox.Show(@"Note is not selected!", @"Error",
@@ -108,10 +110,8 @@ namespace NoteAppUI
             }
             else
             {
-                var selectedIndex = NotesListBox.SelectedIndex;
-                Note selectNote = listNotes[selectedIndex];
                 var result = MessageBox.Show($@"Are you sure you want to delete the note:
-                    {_project.Notes[selectedIndex].Title}?", @"Confirmation",
+                    {listNotes[selectedIndex].Title}?", @"Confirmation",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
                 if (result != DialogResult.OK)
                 {
@@ -124,7 +124,7 @@ namespace NoteAppUI
                 NotesListBox.Items.RemoveAt(selectedIndex);
                 UpdateListBox();
                 ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
-                if (NotesListBox.Items.Count > 0)
+                if (NotesListBox.Items.Count != 0)
                 {
                     NotesListBox.SelectedIndex = 0;
                 }
@@ -149,9 +149,10 @@ namespace NoteAppUI
         private void NotesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var index = NotesListBox.SelectedIndex;
-            var selectNote = listNotes[index];
+            
             if (index >= 0)
             {
+                var selectNote = listNotes[index];
                 _project.SelectedIndex = NotesListBox.SelectedIndex;
                 NameNote.Text = selectNote.Title;
                 TextNoteTextBox.Text = selectNote.TextNote;
