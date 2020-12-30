@@ -45,40 +45,40 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(15, 12);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(15, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 16);
+            this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Title:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(15, 38);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(15, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 16);
+            this.label2.Size = new System.Drawing.Size(52, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Category:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(15, 66);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(15, 68);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 16);
+            this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Created:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(219, 66);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(215, 68);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 16);
+            this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Modified:";
             // 
@@ -86,7 +86,7 @@
             // 
             this.NameNoteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.NameNoteTextBox.Location = new System.Drawing.Point(83, 11);
+            this.NameNoteTextBox.Location = new System.Drawing.Point(79, 11);
             this.NameNoteTextBox.Margin = new System.Windows.Forms.Padding(5);
             this.NameNoteTextBox.MaximumSize = new System.Drawing.Size(750, 20);
             this.NameNoteTextBox.Name = "NameNoteTextBox";
@@ -99,7 +99,7 @@
             this.NoteCategoryComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.NoteCategoryComboBox.FormattingEnabled = true;
-            this.NoteCategoryComboBox.Location = new System.Drawing.Point(83, 37);
+            this.NoteCategoryComboBox.Location = new System.Drawing.Point(79, 37);
             this.NoteCategoryComboBox.Margin = new System.Windows.Forms.Padding(5);
             this.NoteCategoryComboBox.MinimumSize = new System.Drawing.Size(20, 0);
             this.NoteCategoryComboBox.Name = "NoteCategoryComboBox";
@@ -111,7 +111,7 @@
             this.TimeCreateDateTimePicker.CustomFormat = "dd.MM.yyyy hh:mm";
             this.TimeCreateDateTimePicker.Enabled = false;
             this.TimeCreateDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.TimeCreateDateTimePicker.Location = new System.Drawing.Point(83, 64);
+            this.TimeCreateDateTimePicker.Location = new System.Drawing.Point(79, 64);
             this.TimeCreateDateTimePicker.Name = "TimeCreateDateTimePicker";
             this.TimeCreateDateTimePicker.Size = new System.Drawing.Size(123, 20);
             this.TimeCreateDateTimePicker.TabIndex = 6;
@@ -122,7 +122,7 @@
             this.TimeUpdateDateTimePicker.CustomFormat = "dd.MM.yyyy hh:mm";
             this.TimeUpdateDateTimePicker.Enabled = false;
             this.TimeUpdateDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.TimeUpdateDateTimePicker.Location = new System.Drawing.Point(288, 65);
+            this.TimeUpdateDateTimePicker.Location = new System.Drawing.Point(272, 65);
             this.TimeUpdateDateTimePicker.Name = "TimeUpdateDateTimePicker";
             this.TimeUpdateDateTimePicker.Size = new System.Drawing.Size(121, 20);
             this.TimeUpdateDateTimePicker.TabIndex = 7;
@@ -143,11 +143,11 @@
             // OkButton
             // 
             this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OkButton.Location = new System.Drawing.Point(422, 406);
+            this.OkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OkButton.Location = new System.Drawing.Point(470, 406);
             this.OkButton.Margin = new System.Windows.Forms.Padding(5);
             this.OkButton.Name = "OkButton";
-            this.OkButton.Size = new System.Drawing.Size(107, 28);
+            this.OkButton.Size = new System.Drawing.Size(83, 28);
             this.OkButton.TabIndex = 9;
             this.OkButton.Text = "OK";
             this.OkButton.UseVisualStyleBackColor = true;
@@ -156,11 +156,11 @@
             // CancelButton
             // 
             this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.CancelButton.Location = new System.Drawing.Point(539, 406);
+            this.CancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CancelButton.Location = new System.Drawing.Point(563, 406);
             this.CancelButton.Margin = new System.Windows.Forms.Padding(5);
             this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(107, 28);
+            this.CancelButton.Size = new System.Drawing.Size(83, 28);
             this.CancelButton.TabIndex = 10;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
