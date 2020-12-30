@@ -154,13 +154,6 @@ namespace NoteAppUI
             {
                 return;
             }
-            else
-            {
-                if (NotesListBox.Items.Count == 0)
-                {
-                    ClearingFields();
-                }
-            }
             var selectNote = _notesList[index];
                 _project.SelectedIndex = NotesListBox.SelectedIndex;
                 NameNote.Text = selectNote.Title;
@@ -168,8 +161,7 @@ namespace NoteAppUI
                 TimeCreate.Value = selectNote.TimeCreate;
                 TimeUpdate.Value = selectNote.TimeLastChange;
                 NotesCategory.Text = selectNote.NoteCategory.ToString();
-
-            }
+        }
 
             private void ClearingFields()
             {
@@ -301,6 +293,10 @@ namespace NoteAppUI
             private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
             {
                 UpdateListBox();
+                if (NotesListBox.Items.Count==0)
+                {
+                    ClearingFields();
+                }
             }
         }
     }
