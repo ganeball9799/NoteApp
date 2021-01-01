@@ -25,15 +25,15 @@ namespace NoteAppUI
         /// Хранилище для данных
         /// </summary>
         private Project _project = new Project();
-        private List<Note> _notesList = new List<Note>();
+        private List<Note> _viewList = new List<Note>();
         public MainForm()
         {
             InitializeComponent();
             CategoryComboBox.Items.AddRange(Enum.GetNames(typeof(NoteApp.NotesCategory)));
             CategoryComboBox.Items.Add("All");
-            _notesList = _project.Notes;
-            _notesList = _project.SortNotes(_notesList);
-            UpdateListBox();
+            _viewList = _project.Notes;
+            _viewList = _project.SortNotes(_viewList);
+            //UpdateListBox();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace NoteAppUI
                 return;
             }
             _project.Notes.Add(noteForm.TepmNote);
-            _notesList.Add(noteForm.TepmNote);
+            _viewList.Add(noteForm.TepmNote);
             NotesListBox.Items.Add(noteForm.TepmNote.Title);
             UpdateListBox();
             ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
@@ -75,8 +75,7 @@ namespace NoteAppUI
             else
             {
                 var selectIndex = NotesListBox.SelectedIndex;
-                var selectNote = _notesList[selectIndex];
-
+                var selectNote = _viewList[selectIndex];
                 var updateNote = new NoteForm { TepmNote = selectNote };
                 var dialogResult = updateNote.ShowDialog();
                 if (dialogResult != DialogResult.OK)
@@ -85,14 +84,18 @@ namespace NoteAppUI
                 }
 
                 var noteSelectIndex = _project.Notes.IndexOf(selectNote);
-                _notesList.RemoveAt(selectIndex);
+                _viewList.RemoveAt(selectIndex);
                 _project.Notes.RemoveAt(noteSelectIndex);
-                _notesList.Insert(selectIndex, updateNote.TepmNote);
+                _viewList.Insert(selectIndex, updateNote.TepmNote);
                 _project.Notes.Insert(noteSelectIndex, updateNote.TepmNote);
                 NotesListBox.Items.Insert(selectIndex, updateNote.TepmNote.Title);
-                UpdateListBox();
                 _project.SelectedIndex = NotesListBox.SelectedIndex;
                 ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
+                UpdateListBox();
+                if (NotesListBox.Items.Count != 0)
+                {
+                    NotesListBox.SelectedIndex = 0;
+                }
             }
         }
 
@@ -102,7 +105,7 @@ namespace NoteAppUI
         private void DeleteNote()
         {
             var selectedIndex = NotesListBox.SelectedIndex;
-            Note selectNote = _notesList[selectedIndex];
+            Note selectNote = _viewList[selectedIndex];
             if (NotesListBox.SelectedIndex == -1)
             {
                 MessageBox.Show(@"Note is not selected!", @"Error",
@@ -111,7 +114,7 @@ namespace NoteAppUI
             else
             {
                 var result = MessageBox.Show($@"Are you sure you want to delete the note:
-                    {_notesList[selectedIndex].Title}?", @"Confirmation",
+                    {_viewList[selectedIndex].Title}?", @"Confirmation",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
                 if (result != DialogResult.OK)
                 {
@@ -119,7 +122,7 @@ namespace NoteAppUI
                 }
 
                 var noteSelectIndex = _project.Notes.IndexOf(selectNote);
-                _notesList.RemoveAt(selectedIndex);
+                _viewList.RemoveAt(selectedIndex);
                 _project.Notes.RemoveAt(noteSelectIndex);
                 NotesListBox.Items.RemoveAt(selectedIndex);
                 UpdateListBox();
@@ -148,155 +151,160 @@ namespace NoteAppUI
         /// </summary>
         private void NotesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            NotesView(_project.SortNotes(_viewList, (NotesCategory)CategoryComboBox.SelectedIndex));
+        }
+
+        private void NotesView(IReadOnlyList<Note> noteView)
+        {
             var index = NotesListBox.SelectedIndex;
 
             if (index < 0)
             {
                 return;
             }
-            var selectNote = _notesList[index];
-                _project.SelectedIndex = NotesListBox.SelectedIndex;
-                NameNote.Text = selectNote.Title;
-                TextNoteTextBox.Text = selectNote.TextNote;
-                TimeCreate.Value = selectNote.TimeCreate;
-                TimeUpdate.Value = selectNote.TimeLastChange;
-                NotesCategory.Text = selectNote.NoteCategory.ToString();
+            var selectNote = _viewList[index];
+            _project.SelectedIndex = NotesListBox.SelectedIndex;
+            NameNote.Text = selectNote.Title;
+            TextNoteTextBox.Text = selectNote.TextNote;
+            TimeCreate.Value = selectNote.TimeCreate;
+            TimeUpdate.Value = selectNote.TimeLastChange;
+            NotesCategory.Text = selectNote.NoteCategory.ToString();
         }
 
-            private void ClearingFields()
+        private void ClearingFields()
+        {
+            NameNote.Text = "";
+            TextNoteTextBox.Text = "";
+            TimeCreate.Text = "";
+            TimeUpdate.Text = "";
+            NotesCategory.Text = "";
+        }
+
+        /// <summary>
+        /// Обновление списка заметок
+        /// </summary>
+        private void UpdateListBox()
+        {
+            _viewList = _project.Notes;
+            if (CategoryComboBox.SelectedIndex != CategoryComboBox.Items.Count - 1)
             {
-                NameNote.Text = "";
-                TextNoteTextBox.Text = "";
-                TimeCreate.Text = "";
-                TimeUpdate.Text = "";
-                NotesCategory.Text = "";
+                _viewList = _project.SortNotes(_viewList, (NotesCategory)CategoryComboBox.SelectedIndex);
+            }
+            else
+            {
+                _viewList = _project.SortNotes(_viewList);
+            }
+            NotesListBox.Items.Clear();
+            for (int i = 0; i < _viewList.Count; i++)
+            {
+                NotesListBox.Items.Add(_viewList[i].Title);
             }
 
-            /// <summary>
-            /// Обновление списка заметок
-            /// </summary>
-            private void UpdateListBox()
+            if (NotesListBox.Items.Count == 0)
             {
-                _notesList = _project.Notes;
-                if (CategoryComboBox.SelectedIndex != CategoryComboBox.Items.Count - 1)
-                {
-                    _notesList = _project.SortNotes(_notesList, (NotesCategory)CategoryComboBox.SelectedIndex);
-                }
-                else
-                {
-                    _notesList = _project.SortNotes(_notesList);
-                }
-                NotesListBox.Items.Clear();
-                for (int i = 0; i < _notesList.Count; i++)
-                {
-                    NotesListBox.Items.Add(_notesList[i].Title);
-                }
+                ClearingFields();
             }
-            /// <summary>
-            /// Метод обработки последней заметки
-            /// </summary>
-            private void LastOpenNote()
+        }
+        /// <summary>
+        /// Метод обработки последней заметки
+        /// </summary>
+        private void LastOpenNote()
+        {
+            if (_project.SelectedIndex > NotesListBox.Items.Count - 1)
             {
-                if (_project.SelectedIndex > NotesListBox.Items.Count - 1)
-                {
-                    NotesListBox.SelectedIndex = 0;
-                }
-                else
-                {
-                    NotesListBox.SelectedIndex = _project.SelectedIndex;
-                }
+                NotesListBox.SelectedIndex = 0;
             }
-            /// <summary>
-            /// Добавление заметки при нажатии на кнопку AddNoteButton
-            /// </summary>
-            private void AddNoteButton_Click(object sender, EventArgs e)
+            else
             {
-                AddNote();
-                UpdateListBox();
+                NotesListBox.SelectedIndex = _project.SelectedIndex;
             }
+        }
+        /// <summary>
+        /// Добавление заметки при нажатии на кнопку AddNoteButton
+        /// </summary>
+        private void AddNoteButton_Click(object sender, EventArgs e)
+        {
+            AddNote();
+        }
 
-            /// <summary>
-            /// Добавление заметки при нажатии на кнопку EditNoteButton
-            /// </summary>
-            private void EditNoteButton_Click(object sender, EventArgs e)
-            {
-                EditNote();
-            }
+        /// <summary>
+        /// Добавление заметки при нажатии на кнопку EditNoteButton
+        /// </summary>
+        private void EditNoteButton_Click(object sender, EventArgs e)
+        {
+            EditNote();
+        }
 
-            /// <summary>
-            /// Добавление заметки при нажатии на кнопку RemoveNoteButton
-            /// </summary>
-            private void RemoveNoteButton_Click(object sender, EventArgs e)
-            {
-                DeleteNote();
-            }
+        /// <summary>
+        /// Добавление заметки при нажатии на кнопку RemoveNoteButton
+        /// </summary>
+        private void RemoveNoteButton_Click(object sender, EventArgs e)
+        {
+            DeleteNote();
+        }
 
-            /// <summary>
-            /// Добавление заметки, через кнопку
-            /// </summary>
-            private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
-            {
-                AddNote();
-            }
+        /// <summary>
+        /// Добавление заметки, через кнопку
+        /// </summary>
+        private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddNote();
+        }
 
-            /// <summary>
-            /// Редактирование заметки, через кнопку
-            /// </summary>
-            private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
-            {
-                EditNote();
-            }
+        /// <summary>
+        /// Редактирование заметки, через кнопку
+        /// </summary>
+        private void editNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditNote();
+        }
 
-            /// <summary>
-            /// Удаление заметки, через кнопку
-            /// </summary>
-            private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
-            {
-                DeleteNote();
-            }
+        /// <summary>
+        /// Удаление заметки, через кнопку
+        /// </summary>
+        private void removeNoteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteNote();
+        }
 
-            /// <summary>
-            /// Открытие окна About
-            /// </summary>
-            private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-            {
-                ShowAboutForm();
-            }
+        /// <summary>
+        /// Открытие окна About
+        /// </summary>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowAboutForm();
+        }
 
-            /// <summary>
-            /// Метод для открытия окна About
-            /// </summary>
-            private void ShowAboutForm()
-            {
-                var about = new AboutForm();
-                about.ShowDialog();
-            }
+        /// <summary>
+        /// Метод для открытия окна About
+        /// </summary>
+        private void ShowAboutForm()
+        {
+            var about = new AboutForm();
+            about.ShowDialog();
+        }
 
-            /// <summary>
-            ///Закрытие формы с сохранением данных 
-            /// </summary>
-            private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
-            {
-                _project.SelectedIndex = NotesListBox.SelectedIndex;
-                ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
-            }
+        /// <summary>
+        ///Закрытие формы с сохранением данных 
+        /// </summary>
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _project.SelectedIndex = NotesListBox.SelectedIndex;
+            ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
+        }
 
-            /// <summary>
-            /// Закрытие формы, через кнопку в меню
-            /// </summary>
-            private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-            {
-                _project.SelectedIndex = NotesListBox.SelectedIndex;
-                Close();
-            }
+        /// <summary>
+        /// Закрытие формы, через кнопку в меню
+        /// </summary>
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _project.SelectedIndex = NotesListBox.SelectedIndex;
+            Close();
+        }
 
-            private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                UpdateListBox();
-                if (NotesListBox.Items.Count==0)
-                {
-                    ClearingFields();
-                }
-            }
+        private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateListBox();
         }
     }
+}

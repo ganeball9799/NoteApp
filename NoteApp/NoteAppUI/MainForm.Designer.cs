@@ -191,20 +191,20 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(3, 78);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(4, 79);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 15);
+            this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 7;
             this.label5.Text = "Created:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(208, 78);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.Location = new System.Drawing.Point(186, 79);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(58, 15);
+            this.label6.Size = new System.Drawing.Size(50, 13);
             this.label6.TabIndex = 8;
             this.label6.Text = "Modified:";
             // 
@@ -232,7 +232,7 @@
             this.TimeCreate.CustomFormat = "dd.MM.yyyy hh:mm";
             this.TimeCreate.Enabled = false;
             this.TimeCreate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.TimeCreate.Location = new System.Drawing.Point(70, 77);
+            this.TimeCreate.Location = new System.Drawing.Point(57, 76);
             this.TimeCreate.MaxDate = new System.DateTime(9998, 12, 30, 0, 0, 0, 0);
             this.TimeCreate.Name = "TimeCreate";
             this.TimeCreate.Size = new System.Drawing.Size(123, 20);
@@ -245,7 +245,7 @@
             this.TimeUpdate.Enabled = false;
             this.TimeUpdate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.TimeUpdate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TimeUpdate.Location = new System.Drawing.Point(279, 77);
+            this.TimeUpdate.Location = new System.Drawing.Point(242, 76);
             this.TimeUpdate.MaxDate = new System.DateTime(9998, 12, 23, 0, 0, 0, 0);
             this.TimeUpdate.Name = "TimeUpdate";
             this.TimeUpdate.Size = new System.Drawing.Size(126, 20);
