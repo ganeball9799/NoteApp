@@ -25,16 +25,8 @@ namespace NoteAppUI
         /// Хранилище для данных
         /// </summary>
         private Project _project = new Project();
-        private List<Note> _viewList = new List<Note>();
-        public MainForm()
-        {
-            InitializeComponent();
-            CategoryComboBox.Items.AddRange(Enum.GetNames(typeof(NoteApp.NotesCategory)));
-            CategoryComboBox.Items.Add("All");
-            _viewList = _project.Notes;
-            _viewList = _project.SortNotes(_viewList);
-            //UpdateListBox();
-        }
+
+        private List<Note> _viewNotes = new List<Note>();
 
         /// <summary>
         /// Путь к файлу с данными
@@ -43,6 +35,16 @@ namespace NoteAppUI
 
         private readonly string _directoryPath = ProjectManager.PathDirectory();
 
+        public MainForm()
+        {
+            InitializeComponent();
+            CategoryComboBox.Items.AddRange(Enum.GetNames(typeof(NoteApp.NotesCategory)));
+            CategoryComboBox.Items.Add("All");
+            _viewNotes = _project.Notes;
+            _viewNotes = _project.SortNotes(_viewNotes);
+            //UpdateListBox();
+        }
+        
         /// <summary>
         /// добавление заметки
         /// </summary>
@@ -56,7 +58,7 @@ namespace NoteAppUI
                 return;
             }
             _project.Notes.Add(noteForm.TepmNote);
-            _viewList.Add(noteForm.TepmNote);
+            _viewNotes.Add(noteForm.TepmNote);
             NotesListBox.Items.Add(noteForm.TepmNote.Title);
             UpdateListBox();
             ProjectManager.SaveToFile(_project, _filePath, _directoryPath);
@@ -75,7 +77,7 @@ namespace NoteAppUI
             else
             {
                 var selectIndex = NotesListBox.SelectedIndex;
-                var selectNote = _viewList[selectIndex];
+                var selectNote = _viewNotes[selectIndex];
                 var updateNote = new NoteForm { TepmNote = selectNote };
                 var dialogResult = updateNote.ShowDialog();
                 if (dialogResult != DialogResult.OK)
@@ -84,9 +86,9 @@ namespace NoteAppUI
                 }
 
                 var noteSelectIndex = _project.Notes.IndexOf(selectNote);
-                _viewList.RemoveAt(selectIndex);
+                _viewNotes.RemoveAt(selectIndex);
                 _project.Notes.RemoveAt(noteSelectIndex);
-                _viewList.Insert(selectIndex, updateNote.TepmNote);
+                _viewNotes.Insert(selectIndex, updateNote.TepmNote);
                 _project.Notes.Insert(noteSelectIndex, updateNote.TepmNote);
                 NotesListBox.Items.Insert(selectIndex, updateNote.TepmNote.Title);
                 _project.SelectedIndex = NotesListBox.SelectedIndex;
@@ -105,7 +107,7 @@ namespace NoteAppUI
         private void DeleteNote()
         {
             var selectedIndex = NotesListBox.SelectedIndex;
-            Note selectNote = _viewList[selectedIndex];
+            Note selectNote = _viewNotes[selectedIndex];
             if (NotesListBox.SelectedIndex == -1)
             {
                 MessageBox.Show(@"Note is not selected!", @"Error",
@@ -114,7 +116,7 @@ namespace NoteAppUI
             else
             {
                 var result = MessageBox.Show($@"Are you sure you want to delete the note:
-                    {_viewList[selectedIndex].Title}?", @"Confirmation",
+                    {_viewNotes[selectedIndex].Title}?", @"Confirmation",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
                 if (result != DialogResult.OK)
                 {
@@ -122,7 +124,7 @@ namespace NoteAppUI
                 }
 
                 var noteSelectIndex = _project.Notes.IndexOf(selectNote);
-                _viewList.RemoveAt(selectedIndex);
+                _viewNotes.RemoveAt(selectedIndex);
                 _project.Notes.RemoveAt(noteSelectIndex);
                 NotesListBox.Items.RemoveAt(selectedIndex);
                 UpdateListBox();
@@ -151,7 +153,7 @@ namespace NoteAppUI
         /// </summary>
         private void NotesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NotesView(_project.SortNotes(_viewList, (NotesCategory)CategoryComboBox.SelectedIndex));
+            NotesView(_project.SortNotes(_viewNotes, (NotesCategory)CategoryComboBox.SelectedIndex));
         }
 
         /// <summary>
@@ -165,7 +167,7 @@ namespace NoteAppUI
             {
                 return;
             }
-            var selectNote = _viewList[index];
+            var selectNote = _viewNotes[index];
             _project.SelectedIndex = NotesListBox.SelectedIndex;
             NameNote.Text = selectNote.Title;
             TextNoteTextBox.Text = selectNote.TextNote;
@@ -173,7 +175,7 @@ namespace NoteAppUI
             TimeUpdate.Value = selectNote.TimeLastChange;
             NotesCategory.Text = selectNote.NoteCategory.ToString();
         }
-        
+
         /// <summary>
         /// Свойство отчистки полей
         /// </summary>
@@ -191,19 +193,19 @@ namespace NoteAppUI
         /// </summary>
         private void UpdateListBox()
         {
-            _viewList = _project.Notes;
+            _viewNotes = _project.Notes;
             if (CategoryComboBox.SelectedIndex != CategoryComboBox.Items.Count - 1)
             {
-                _viewList = _project.SortNotes(_viewList, (NotesCategory)CategoryComboBox.SelectedIndex);
+                _viewNotes = _project.SortNotes(_viewNotes, (NotesCategory)CategoryComboBox.SelectedIndex);
             }
             else
             {
-                _viewList = _project.SortNotes(_viewList);
+                _viewNotes = _project.SortNotes(_viewNotes);
             }
             NotesListBox.Items.Clear();
-            for (int i = 0; i < _viewList.Count; i++)
+            for (int i = 0; i < _viewNotes.Count; i++)
             {
-                NotesListBox.Items.Add(_viewList[i].Title);
+                NotesListBox.Items.Add(_viewNotes[i].Title);
             }
 
             if (NotesListBox.Items.Count == 0)
@@ -321,7 +323,7 @@ namespace NoteAppUI
         /// </summary>
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode==Keys.F1)
+            if (e.KeyCode == Keys.F1)
             {
                 ShowAboutForm();
             }
