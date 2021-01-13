@@ -278,7 +278,7 @@ namespace NoteAppUI
         /// <summary>
         /// Метод для открытия окна About
         /// </summary>
-        private void ShowAboutForm()
+        private static void ShowAboutForm()
         {
             var about = new AboutForm();
             about.ShowDialog();
@@ -302,9 +302,23 @@ namespace NoteAppUI
             Close();
         }
 
+        /// <summary>
+        /// Обновление списка заметок при выборе категории
+        /// </summary>
         private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateListBox();
+        }
+
+        /// <summary>
+        /// Открытие окна при нажатии клавиши F1
+        /// </summary>
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode==Keys.F1)
+            {
+                ShowAboutForm();
+            }
         }
     }
 }
