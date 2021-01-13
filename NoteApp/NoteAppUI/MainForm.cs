@@ -154,6 +154,9 @@ namespace NoteAppUI
             NotesView(_project.SortNotes(_viewList, (NotesCategory)CategoryComboBox.SelectedIndex));
         }
 
+        /// <summary>
+        /// Свойство выбора заметки
+        /// </summary>
         private void NotesView(IReadOnlyList<Note> noteView)
         {
             var index = NotesListBox.SelectedIndex;
@@ -170,7 +173,10 @@ namespace NoteAppUI
             TimeUpdate.Value = selectNote.TimeLastChange;
             NotesCategory.Text = selectNote.NoteCategory.ToString();
         }
-
+        
+        /// <summary>
+        /// Свойство отчистки полей
+        /// </summary>
         private void ClearingFields()
         {
             NameNote.Text = "";
